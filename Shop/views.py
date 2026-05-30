@@ -8,11 +8,10 @@ from django.views import View
 
 class ProdctView(View):
  def get(self, request):
-  getspants = Product.objects.filter(category = 'GP')
+  gentspants = Product.objects.filter(category = 'GP')
   borkhas = Product.objects.filter(category = 'BK')
   babyFushions = Product.objects.filter(category = "BF")
-
-  return render(request, 'Shop/home.html',{'getspants': getspants, 'borkhas': borkhas, 'babyFushions': babyFushions })
+  return render(request, 'Shop/home.html',{'gentspants': gentspants, 'borkhas': borkhas, 'babyFushions': babyFushions })
 
 def product_detail(request):
  return render(request, 'Shop/productdetail.html')
