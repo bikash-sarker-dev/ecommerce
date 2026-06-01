@@ -13,8 +13,13 @@ class ProdctView(View):
   babyFushions = Product.objects.filter(category = "BF")
   return render(request, 'Shop/home.html',{'gentspants': gentspants, 'borkhas': borkhas, 'babyFushions': babyFushions })
 
-def product_detail(request):
- return render(request, 'Shop/productdetail.html')
+# def product_detail(request):
+#  return render(request, 'Shop/productdetail.html')
+
+class ProductDetailsView(View):
+ def get(self, request, pk):
+  product =  Product.objects.get(pk=pk)
+  return render(request, 'Shop/productdetail.html', {'product':product})
 
 def add_to_cart(request):
  return render(request, 'Shop/addtocart.html')

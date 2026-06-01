@@ -70,5 +70,5 @@ class OrderPlaced(models.Model):
     Customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
-    quantity = models.DateTimeField(auto_now_add=True)
+    date_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(choices=STATUS_CHOICE, max_length=30, default='Panding')
