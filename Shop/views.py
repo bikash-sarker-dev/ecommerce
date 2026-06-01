@@ -44,6 +44,10 @@ def lehenga(request, data=None):
     lehengas = Product.objects.filter(category = 'L')
   elif data == "intervalue" or data == "NSB":
     lehengas = Product.objects.filter(category ='L').filter(brand = data)
+  elif data == 'below':
+   lehengas = Product.objects.filter(category='L').filter(selling_price__lt = 500)
+  elif data == 'Above':
+   lehengas = Product.objects.filter(category = 'L').filter(selling_price__gt = 500)
 
   return render(request, 'Shop/lehenga.html', {'lehengas':lehengas})
 
