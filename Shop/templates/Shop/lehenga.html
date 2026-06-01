@@ -1,15 +1,66 @@
+
+
+
 {% extends 'Shop/base.html' %}
 {% load static %}
 {% block title %}Buy Now{% endblock title %}
+
 {% block main-content %}
 <div class="container my-5">
     <div class="row">
-        <div class="col-sm-3">
-            Side Bar for Lehenga filter
+
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Categories</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="{% url 'lehenga' %}" class="text-decoration-none">All Lehenga</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'lehengaItem' 'intervalue' %}" class="text-decoration-none">intervalue</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'lehengaItem' 'NSB' %}" class="text-decoration-none">NSB</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#" class="text-decoration-none">Traditional Lehenga</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#" class="text-decoration-none">Festive Collection</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-8 offset-sm-1">
-            Lehenga Product List
+
+        <!-- Product List -->
+        <div class="col-md-9">
+            <div class="row">
+
+                <!-- Product Card 1 -->
+                {% for l in lehengas %}
+            
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <img src="{{l.product_image.url}}" 
+                                class="card-img-top" 
+                                alt="Lehenga">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">{{l.title}}</h5>
+                                <p class="text-success fw-bold">{{l.selling_price}}</p>
+                                <a href="#" class="btn btn-primary">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+     
+            </div>
         </div>
+
     </div>
 </div>
 {% endblock main-content %}

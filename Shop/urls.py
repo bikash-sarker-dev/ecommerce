@@ -14,6 +14,7 @@ urlpatterns = [
     path('orders/', views.orders, name='orders'),
     path('changepassword/', views.change_password, name='changepassword'),
     path('lehenga/', views.lehenga, name='lehenga'),
+    path('lehenga/<slug:data>', views.lehenga, name='lehengaItem' ),
     path('login/', views.login, name='login'),
     path('registration/', views.customerregistration, name='customerregistration'),
     path('checkout/', views.checkout, name='checkout'),
