@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from . models import Customer, Product, Card, OrderPlaced
 from django.views import View
+from . forms import CustomerRegistrationForm
+from django.contrib import messages
 
 # Create your views here.
 # def home(request):
@@ -54,8 +56,24 @@ def lehenga(request, data=None):
 def login(request):
      return render(request, 'Shop/login.html')
 
-def customerregistration(request):
- return render(request, 'Shop/customerregistration.html')
+
+
+# def customerregistration(request):
+#  return render(request, 'Shop/customerregistration.html')
+
+class customerRegistrationView(View):
+ def get(self, request):
+  form = CustomerRegistrationForm()
+  return render(request, 'Shop/customerregistration.html', {'form':form})
+ 
+ def post(self, request):
+  form = CustomerRegistrationForm(request.POST)
+  if form.is_valid():
+   form.save()
+   messages.success(request, 'registraton successfully complated !')
+   return render(request, 'Shop/customerregistration.html', {'form':form})
+
+
 
 def checkout(request):
  return render(request, 'Shop/checkout.html')

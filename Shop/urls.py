@@ -16,6 +16,6 @@ urlpatterns = [
     path('lehenga/', views.lehenga, name='lehenga'),
     path('lehenga/<slug:data>', views.lehenga, name='lehengaItem' ),
     path('login/', views.login, name='login'),
-    path('registration/', views.customerregistration, name='customerregistration'),
+    path('registration/', views.customerRegistrationView.as_view(), name='customerregistration'),
     path('checkout/', views.checkout, name='checkout'),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
