@@ -53,8 +53,7 @@ def lehenga(request, data=None):
 
   return render(request, 'Shop/lehenga.html', {'lehengas':lehengas})
 
-def login(request):
-     return render(request, 'Shop/login.html')
+
 
 
 
@@ -72,6 +71,9 @@ class customerRegistrationView(View):
    form.save()
    messages.success(request, 'registraton successfully complated !')
    return render(request, 'Shop/customerregistration.html', {'form':form})
+
+# def login(request):
+#     return render(request, 'Shop/login.html')
 
 
 
