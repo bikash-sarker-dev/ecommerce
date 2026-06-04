@@ -20,6 +20,11 @@
                 <div class="text-center text-primary fw-bold"><small>New to aiQuestFashion ? <a
                             href="{% url 'customerregistration' %}" class="text-danger">Create an Account</a> </small>
                 </div>
+                {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                <p class="alert alert-danger my-3">{{error}}</p>
+                {% endfor %}
+                {% endif %}
             </form>
         </div>
     </div>
