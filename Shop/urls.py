@@ -3,7 +3,7 @@ from Shop import views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
-from . forms import LoginForm, ChangePasswordFrom
+from . forms import LoginForm, ChangePasswordFrom, PasswordResetForm
 
 urlpatterns = [
     path('', views.ProdctView.as_view(), name = 'home'),
@@ -24,6 +24,9 @@ urlpatterns = [
 
 
     path('registration/', views.customerRegistrationView.as_view(), name='customerregistration'),
+
+    path('password_reset/', auth_views.PasswordResetView.as_view(template_name="Shone/password_reset.html", form_class=PasswordResetForm), name="password_reset"),
+
     path('checkout/', views.checkout, name='checkout'),
     path('logout/', auth_views.LogoutView.as_view(next_page = 'login') , name="logout"),
 
