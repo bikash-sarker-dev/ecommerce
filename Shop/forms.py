@@ -29,9 +29,9 @@ class LoginForm(AuthenticationForm):
 
 
 class ChangePasswordFrom(PasswordChangeForm):
-    old_password = forms.CharField(label="Old Password", widget = forms.PasswordInput(attrs={'autocomplete':'current-password', 'class':'form-control'}))
-    new_password1 = forms.CharField(label="New Password", widget = forms.PasswordInput(attrs={'autocomplete':'new-password', 'class':'form-control'}), help_text=password_validation.password_validators_help_text_html()) 
-    new_password2 = forms.CharField(label="New confrim Password", widget = forms.PasswordInput(attrs={'autocomplete':'new-password', 'class':'form-control'}))
+    old_password = forms.CharField(label=_("Old Password"), widget = forms.PasswordInput(attrs={'autocomplete':'current-password', 'class':'form-control'}))
+    new_password1 = forms.CharField(label=_("New Password"), widget = forms.PasswordInput(attrs={'autocomplete':'new-password', 'class':'form-control'}), help_text=password_validation.password_validators_help_text_html()) 
+    new_password2 = forms.CharField(label=_("New confrim Password"), widget = forms.PasswordInput(attrs={'autocomplete':'new-password', 'class':'form-control'}))
 
 
 class PasswordResetForm(PasswordResetForm):
@@ -39,6 +39,7 @@ class PasswordResetForm(PasswordResetForm):
 
 
 
-class SetPasswordForm(SetPasswordForm):
-    new_passowrd1 = forms.CharField(label="New password", strip=False, widget=forms.PasswordInput(attrs={'autocomplet':'new-password', 'class':'form-control'}), help_text=password_validation.password_validators_help_text_html())
-    new_passowrd2 = forms.CharField(label="Confirm password", strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'confrim-passowrd', 'class':'form-control'}))
+class MySetPasswordForm(SetPasswordForm):
+    new_password1 = forms.CharField(label=_("New Password"), widget = forms.PasswordInput(attrs={'autocomplete':'new-password', 'class':'form-control'}), help_text=password_validation.password_validators_help_text_html()) 
+    new_password2 = forms.CharField(label=_("New confrim Password"), widget = forms.PasswordInput(attrs={'autocomplete':'new-password', 'class':'form-control'}))
+
