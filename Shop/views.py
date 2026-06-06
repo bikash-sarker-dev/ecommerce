@@ -70,7 +70,7 @@ class customerRegistrationView(View):
   if form.is_valid():
    form.save()
    messages.success(request, 'registraton successfully complated !')
-   return render(request, 'Shop/customerregistration.html', {'form':form})
+  return render(request, 'Shop/customerregistration.html', {'form':form})
 
 # def login(request):
 #     return render(request, 'Shop/login.html')
