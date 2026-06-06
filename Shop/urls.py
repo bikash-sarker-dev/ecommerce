@@ -25,7 +25,7 @@ urlpatterns = [
 
     path('registration/', views.customerRegistrationView.as_view(), name='customerregistration'),
 
-    path('password_reset/', auth_views.PasswordResetView.as_view(template_name="Shone/password_reset.html", form_class=PasswordResetForm), name="password_reset"),
+    path('password_reset/', auth_views.PasswordResetView.as_view(template_name="Shop/password_reset.html", form_class=PasswordResetForm), name="password_reset"),
 
     path('checkout/', views.checkout, name='checkout'),
     path('logout/', auth_views.LogoutView.as_view(next_page = 'login') , name="logout"),
