@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from . models import Customer, Product, Card, OrderPlaced
 from django.views import View
-from . forms import CustomerRegistrationForm
+from . forms import CustomerRegistrationForm, CustomerProfileForm
 from django.contrib import messages
 
 # Create your views here.
@@ -29,8 +29,13 @@ def add_to_cart(request):
 def buy_now(request):
  return render(request, 'Shop/buynow.html')
 
-def profile(request):
- return render(request, 'Shop/profile.html')
+# def profile(request):
+#  return render(request, 'Shop/profile.html')
+
+class Profile_View(View):
+ def get(self, request):
+  form = CustomerProfileForm()
+  return render(request, 'Shop/profile.html',{'form':form})
 
 def address(request):
  return render(request, 'Shop/address.html')

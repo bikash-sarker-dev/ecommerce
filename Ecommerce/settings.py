@@ -121,7 +121,13 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR/'media/'
 LOGIN_REDIRECT_URL = '/profile/'
 # EMAIL_BACKEND ='django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_POST = 587
+EMAIL_HOST_USER = ('bikash.webdeveloper5@gmail.com')
+EMAIL_HOST_PASSWORD = 'egzm tted mlsq ugqd'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
