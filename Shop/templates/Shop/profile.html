@@ -4,11 +4,11 @@
 {% block main-content %}
 <div class="container my-5">
     <div class="row">
-        <h3>Welcome aiQuest</h3>
+        <h3>Welcome {{request.user|capfirst}}</h3>
         <div class="col-sm-2 border-end">
             <ul class="list-unstyled">
-                <li class="d-grid"><a href="{% url 'profile' %}" class="btn btn-primary">Profile</a></li>
-                <li class="d-grid"><a href="{% url 'address' %}" class="btn">Address</a></li>
+                <li class="d-grid"><a href="{% url 'profile' %}" class="btn {{active}}">Profile</a></li>
+                <li class="d-grid"><a href="{% url 'address' %}" class="btn {{active}}">Address</a></li>
             </ul>
         </div>
         <div class="col-sm-8 offset-sm-1">
@@ -23,6 +23,12 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
+            {% if messages %}
+                {% for msg in messages %}
+                    <p class="alert alert-success mt-4">{{msg}}</p>
+                {% endfor %}
+           
+            {% endif %}
                 {% if form.non_field_errors %}
                 {% for error in form.non_field_errors %}
                 <p class="alert alert-danger my-3">{{error}}</p>

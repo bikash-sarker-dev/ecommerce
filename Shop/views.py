@@ -35,7 +35,21 @@ def buy_now(request):
 class Profile_View(View):
  def get(self, request):
   form = CustomerProfileForm()
-  return render(request, 'Shop/profile.html',{'form':form})
+  return render(request, 'Shop/profile.html',{'form':form, 'active':'btn-primary'})
+ 
+ def post(self, request):
+  form = CustomerProfileForm(request.POST)
+  if form.is_valid():
+    user = request.user
+    division = form.cleaned_data['division']
+    district = form.cleaned_data['district']
+    thana = form.cleaned_data['thana']
+    villorroad = form.cleaned_data['villorroad']
+    zipCode = form.cleaned_data['zipCode']
+    reg = Customer(user=user,division=division,district=district,thana=thana,villorroad=villorroad, zipCode=zipCode)
+    reg.save()
+    messages.success(request, 'this is profile update successfull done !')
+  return render(request, 'Shop/profile.html',{'form':form, 'active':'btn-primary'})
 
 def address(request):
  return render(request, 'Shop/address.html')
