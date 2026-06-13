@@ -3,6 +3,8 @@ from . models import Customer, Product, Card, OrderPlaced
 from django.views import View
 from . forms import CustomerRegistrationForm, CustomerProfileForm
 from django.contrib import messages
+from django.db.models import Q
+from django.http import JsonResponse
 
 # Create your views here.
 # def home(request):
@@ -34,9 +36,73 @@ def add_to_cart(request):
 def show_card(request):
  if request.user.is_authenticated:
   user =request.user
+
+  amount = 0
+  shipping_amount =100
+  total_amount = 0
+  cart_product = [p for p in Card.objects.all() if p.user == user]
+  
+  if cart_product:
+   for p in cart_product:
+    temp_amount = (p.quantity * p.product.discounted_price)
+    amount = temp_amount + amount
+    totalamount = amount + shipping_amount
+  else:
+   return render(request, 'Shop/emptycart.html')
+   
   cart = Card.objects.filter(user=user)
-  return render(request, 'Shop/addtocart.html', {'carts':cart})
+  return render(request, 'Shop/addtocart.html', {'carts':cart, 'totalamount': totalamount, 'amount':amount})
  
+
+def plus_cart(request):
+ if request.method == "GET":
+  prod_id = request.GET['prod_id']
+  c = Card.objects.get(Q(product=prod_id) & Q(user=request.user))
+  c.quantity +=1
+  c.save()
+
+  amount = 0
+  shopping_amount = 100
+  cart_product = [p for p in Card.objects.all() if p.user == request.user]
+  for p in cart_product:
+   tempamount = (p.quantity * p.product.discounted_price)
+   amount += tempamount
+   totalamount = amount + shopping_amount
+
+   data = {
+     'quantity': c.quantity,
+     'amount': amount,
+     'totalamount': totalamount,
+    }
+
+   return JsonResponse(data)
+   
+
+def minus_cart(request):
+ if request.method == "GET":
+  prod_id = request.GET['prod_id']
+  c = Card.objects.get(Q(product=prod_id) & Q(user=request.user))
+  c.quantity -=1
+  c.save()
+
+  amount = 0
+  shopping_amount = 100
+  cart_product = [p for p in Card.objects.all() if p.user ==  request.user]
+  if cart_product:
+   for p in cart_product:
+    tempamount = (p.quantity * p.product.discounted_price)
+    amount += tempamount
+    totalamount = amount + shopping_amount
+
+    data = {
+     'quantity': c.quantity,
+     'amount': amount,
+     'totalamount': totalamount
+    }
+
+    return JsonResponse(data)
+
+
 
 def buy_now(request):
  return render(request, 'Shop/buynow.html')

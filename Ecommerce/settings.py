@@ -135,5 +135,3 @@ EMAIL_HOST_PASSWORD = 'egzm tted mlsq ugqd'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# user: bikash1234
-# pass: aa11@bb22
