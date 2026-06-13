@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from . models import Customer, Product, Card, OrderPlaced
 from django.views import View
 from . forms import CustomerRegistrationForm, CustomerProfileForm
@@ -24,7 +24,19 @@ class ProductDetailsView(View):
   return render(request, 'Shop/productdetail.html', {'product':product})
 
 def add_to_cart(request):
- return render(request, 'Shop/addtocart.html')
+ user =request.user
+ product_id = request.GET.get('prod_id')
+ product = Product.objects.get(id = product_id)
+ addCardProdcut = Card(user=user, product=product)
+ addCardProdcut.save()
+ return redirect('/cart/')
+
+def show_card(request):
+ if request.user.is_authenticated:
+  user =request.user
+  cart = Card.objects.filter(user=user)
+  return render(request, 'Shop/addtocart.html', {'carts':cart})
+ 
 
 def buy_now(request):
  return render(request, 'Shop/buynow.html')
@@ -40,19 +52,21 @@ class Profile_View(View):
  def post(self, request):
   form = CustomerProfileForm(request.POST)
   if form.is_valid():
-    user = request.user
+    usr = request.user
+    name = form.cleaned_data['name']
     division = form.cleaned_data['division']
     district = form.cleaned_data['district']
     thana = form.cleaned_data['thana']
     villorroad = form.cleaned_data['villorroad']
     zipCode = form.cleaned_data['zipCode']
-    reg = Customer(user=user,division=division,district=district,thana=thana,villorroad=villorroad, zipCode=zipCode)
+    reg = Customer(user=usr,name=name, division=division,district=district,thana=thana,villorroad=villorroad, zipCode=zipCode)
     reg.save()
     messages.success(request, 'this is profile update successfull done !')
   return render(request, 'Shop/profile.html',{'form':form, 'active':'btn-primary'})
 
 def address(request):
- return render(request, 'Shop/address.html')
+ add = Customer.objects.filter(user=request.user)
+ return render(request, 'Shop/address.html', {'add':add, 'active':'btn-primary'})
 
 def orders(request):
  return render(request, 'Shop/orders.html')
