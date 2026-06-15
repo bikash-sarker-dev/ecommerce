@@ -14,6 +14,9 @@ urlpatterns = [
     path('cart/', views.show_card, name="show_cart"),
     path('pluscart/', views.plus_cart),
     path('minuscart/', views.minus_cart),
+    path('removecart/', views.remove_cart),
+
+    path('checkout/', views.checkout, name='checkout'),
 
     path('buy/', views.buy_now, name='buy-now'),
 
@@ -46,7 +49,7 @@ urlpatterns = [
 
 
 
-    path('checkout/', views.checkout, name='checkout'),
+    
     path('logout/', auth_views.LogoutView.as_view(next_page = 'login') , name="logout"),
 
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

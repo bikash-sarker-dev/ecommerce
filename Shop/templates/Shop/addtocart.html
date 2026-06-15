@@ -15,7 +15,7 @@
                     {% for cart in carts %}
                     <div class="row">
                         <div class="col-sm-3 text-center align-self-center"><img
-                                src="{% static 'Shop/images/product/1.jpg'%}" alt="" srcset=""
+                                src="{{cart.product.product_image.url}}" alt="" srcset=""
                                 class="img-fluid img-thumbnail shadow-sm" height="150" width="150"> </div>
                         <div class="col-sm-9">
                             <div>
@@ -28,13 +28,15 @@
                                     <a pid="{{cart.product.id}}" class="plus-cart btn"><i class="fas fa-plus-square fa-lg"></i></a>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <a pid="{{cart.product.id}}" href="#" class="btn btn-sm btn-info  text-white mr-3">Remove item </a>
+                                    <a pid="{{cart.product.id}}" href="#" class="btn btn-sm btn-info remove-cart  text-white mr-3">Remove item </a>
                                     <p class="mb-0"><span><strong>Tk. {{cart.product.discounted_price}}</strong></span></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <hr class="text-muted">
+
+                    
                      {% endfor %}
                   
                 </div>
