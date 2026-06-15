@@ -76,3 +76,7 @@ class OrderPlaced(models.Model):
     quantity = models.PositiveIntegerField(default=1)
     ordered_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(choices=STATUS_CHOICE, max_length=30, default='Panding')
+
+    @property
+    def total_cust(self):
+        return self.quantity * self.product.discounted_price
