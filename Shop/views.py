@@ -199,15 +199,27 @@ class customerRegistrationView(View):
 
 
 def checkout(request):
- user = request.user
- add = Customer.objects.filter(user = user)
- cart_item = Card.objects.filter(user = user)
- amount = 0
- shipping_amount = 100
- totalamount = 0
- cart_product = [ p for p in Card.objects.all() if p.user == user]
- for p in cart_product:
-  temp_amount = (p.quantity * p.product.discounted_price)
-  amount += temp_amount
-  totalamount = amount + shipping_amount
- return render(request, 'Shop/checkout.html', {'add':add, 'totalamount':totalamount, 'cart_item': cart_item})
+  user = request.user
+  add = Customer.objects.filter(user = user)
+  cart_item = Card.objects.filter(user = user)
+  amount = 0
+  shipping_amount = 100
+  totalamount = 0
+  cart_product = [ p for p in Card.objects.all() if p.user == user]
+  for p in cart_product:
+    temp_amount = (p.quantity * p.product.discounted_price)
+    amount += temp_amount
+    totalamount = amount + shipping_amount
+  return render(request, 'Shop/checkout.html', {'add':add, 'totalamount':totalamount, 'cart_item': cart_item})
+
+
+def pyment_done(request):
+  user = request.usser
+  customer_id = request.GET.get("customer_id")
+  customer = Customer.objects.get(id = customer_id)
+  carts = Card.objects.filter(user = user)
+  for cart in carts:
+   place_order = OrderPlaced(user = user, Customer=customer,  product=cart.product, quantity=cart.quantity)
+   place_order.save()
+   cart.delete()
+  return redirect('orders')
