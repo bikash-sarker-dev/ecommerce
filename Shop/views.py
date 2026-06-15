@@ -157,7 +157,8 @@ def address(request):
  return render(request, 'Shop/address.html', {'add':add, 'active':'btn-primary'})
 
 def orders(request):
- return render(request, 'Shop/orders.html')
+ current_order_place = OrderPlaced.objects.filter(user = request.user)
+ return render(request, 'Shop/orders.html', {'order_placed':current_order_place})
 
 def change_password(request):
  return render(request, 'Shop/changepassword.html')
