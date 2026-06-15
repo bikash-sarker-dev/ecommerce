@@ -213,8 +213,8 @@ def checkout(request):
   return render(request, 'Shop/checkout.html', {'add':add, 'totalamount':totalamount, 'cart_item': cart_item})
 
 
-def pyment_done(request):
-  user = request.usser
+def payment_done(request):
+  user = request.user
   customer_id = request.GET.get("customer_id")
   customer = Customer.objects.get(id = customer_id)
   carts = Card.objects.filter(user = user)
@@ -222,4 +222,4 @@ def pyment_done(request):
    place_order = OrderPlaced(user = user, Customer=customer,  product=cart.product, quantity=cart.quantity)
    place_order.save()
    cart.delete()
-  return redirect('orders')
+  return redirect('/orders/')
