@@ -43,7 +43,7 @@ urlpatterns = [
     path('lehenga/', views.lehenga, name='lehenga'),
 
     path('lehenga/<slug:data>', views.lehenga, name='lehengaItem' ),
-    # path('login/', views.login, name='login'),
+   
     path('accounts/login/', auth_views.LoginView.as_view(template_name='Shop/login.html', authentication_form = LoginForm), name="login"),
 
 

@@ -5,10 +5,13 @@ from . forms import CustomerRegistrationForm, CustomerProfileForm
 from django.contrib import messages
 from django.db.models import Q
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 # Create your views here.
 # def home(request):
 #      return render(request, 'Shop/home.html')
+
 
 class ProdctView(View):
  def get(self, request):
@@ -20,6 +23,7 @@ class ProdctView(View):
 # def product_detail(request):
 #  return render(request, 'Shop/productdetail.html')
 
+@method_decorator(login_required, name="dispatch")
 class ProductDetailsView(View):
  def get(self, request, pk):
   product =  Product.objects.get(pk=pk)
@@ -131,7 +135,7 @@ def buy_now(request):
 
 # def profile(request):
 #  return render(request, 'Shop/profile.html')
-
+@method_decorator(login_required , name="dispatch")
 class Profile_View(View):
  def get(self, request):
   form = CustomerProfileForm()
@@ -152,10 +156,13 @@ class Profile_View(View):
     messages.success(request, 'this is profile update successfull done !')
   return render(request, 'Shop/profile.html',{'form':form, 'active':'btn-primary'})
 
+
+@login_required
 def address(request):
  add = Customer.objects.filter(user=request.user)
  return render(request, 'Shop/address.html', {'add':add, 'active':'btn-primary'})
 
+@login_required
 def orders(request):
  current_order_place = OrderPlaced.objects.filter(user = request.user)
  return render(request, 'Shop/orders.html', {'order_placed':current_order_place})
@@ -198,7 +205,7 @@ class customerRegistrationView(View):
 #     return render(request, 'Shop/login.html')
 
 
-
+@login_required
 def checkout(request):
   user = request.user
   add = Customer.objects.filter(user = user)
@@ -213,7 +220,7 @@ def checkout(request):
     totalamount = amount + shipping_amount
   return render(request, 'Shop/checkout.html', {'add':add, 'totalamount':totalamount, 'cart_item': cart_item})
 
-
+@login_required
 def payment_done(request):
   user = request.user
   customer_id = request.GET.get("customer_id")
