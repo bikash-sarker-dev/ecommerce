@@ -27,7 +27,12 @@ class ProdctView(View):
 class ProductDetailsView(View):
  def get(self, request, pk):
   product =  Product.objects.get(pk=pk)
-  return render(request, 'Shop/productdetail.html', {'product':product})
+  item_already_in_cart = False
+  if request.user.is_authenticated:
+   item_already_in_cart = Card.objects.filter(Q(product = product.id) & Q(user=request.user)).exists()
+
+  
+  return render(request, 'Shop/productdetail.html', {'product':product, 'item_already_in_cart':item_already_in_cart})
 
 def add_to_cart(request):
  user = request.user
