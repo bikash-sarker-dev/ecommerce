@@ -15,10 +15,15 @@ from django.utils.decorators import method_decorator
 
 class ProdctView(View):
  def get(self, request):
+  total_item = 0
   gentspants = Product.objects.filter(category = 'GP')
   borkhas = Product.objects.filter(category = 'BK')
   babyFushions = Product.objects.filter(category = "BF")
-  return render(request, 'Shop/home.html',{'gentspants': gentspants, 'borkhas': borkhas, 'babyFushions': babyFushions })
+  print("total_item", total_item)
+  if request.user.is_authenticated:
+    total_item = len(Card.objects.filter(user = request.user))
+    print("total_item", total_item)
+  return render(request, 'Shop/home.html',{'gentspants': gentspants, 'borkhas': borkhas, 'babyFushions': babyFushions , 'total_item':total_item})
 
 # def product_detail(request):
 #  return render(request, 'Shop/productdetail.html')
