@@ -19,10 +19,10 @@ class ProdctView(View):
   gentspants = Product.objects.filter(category = 'GP')
   borkhas = Product.objects.filter(category = 'BK')
   babyFushions = Product.objects.filter(category = "BF")
-  print("total_item", total_item)
+
   if request.user.is_authenticated:
     total_item = len(Card.objects.filter(user = request.user))
-    print("total_item", total_item)
+    
   return render(request, 'Shop/home.html',{'gentspants': gentspants, 'borkhas': borkhas, 'babyFushions': babyFushions , 'total_item':total_item})
 
 # def product_detail(request):
@@ -31,13 +31,13 @@ class ProdctView(View):
 @method_decorator(login_required, name="dispatch")
 class ProductDetailsView(View):
  def get(self, request, pk):
+  total_item = 0
   product =  Product.objects.get(pk=pk)
   item_already_in_cart = False
   if request.user.is_authenticated:
+   total_item = len(Card.objects.filter(user = request.user))
    item_already_in_cart = Card.objects.filter(Q(product = product.id) & Q(user=request.user)).exists()
-
-  
-  return render(request, 'Shop/productdetail.html', {'product':product, 'item_already_in_cart':item_already_in_cart})
+  return render(request, 'Shop/productdetail.html', {'product':product, 'item_already_in_cart':item_already_in_cart, 'total_item':total_item})
 
 def add_to_cart(request):
  user = request.user
