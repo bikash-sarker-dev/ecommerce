@@ -14,7 +14,7 @@ DIVISION_CHOICES = (
 class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=34)
-    division = models.CharField(choices=DIVISION_CHOICES, max_length=59)
+    division = models.CharField(choices=DIVISION_CHOICES, max_length=43)
     district = models.CharField(max_length=200)
     thana = models.CharField(max_length=60)
     villorroad = models.CharField(max_length=200)
