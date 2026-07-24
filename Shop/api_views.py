@@ -1,10 +1,11 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, viewsets
 from django.contrib.auth.models import User
-from .serializers import RegisterSerializer
+from .serializers import RegisterSerializer, ProductSerializer
 from rest_framework import permissions
+from . models import Product
 
 
 @api_view(['GET'])
@@ -31,4 +32,11 @@ class Student(APIView):
 class ResgisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+
+class PrductView(viewsets.ReadOnlyModelViewSet):
+    queryset = Product.objects.all().order_by('-id')
+    serializer_class = ProductSerializer
     permission_classes = [permissions.AllowAny]

@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
+from . models import Product
 
 
 
@@ -32,4 +33,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    product_image = serializers.ImageField(read_only=True)
+
+    class Meta:
+        model= Product
+        fields = ['id', 'title','selling_price','discounted_price','description','brand','category','product_image']
 
