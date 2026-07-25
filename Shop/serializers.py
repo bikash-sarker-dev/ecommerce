@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from . models import Product
+from . models import Product, Card
 
 
 
@@ -42,3 +42,22 @@ class ProductSerializer(serializers.ModelSerializer):
         model= Product
         fields = ['id', 'title','selling_price','discounted_price','description','brand','category','product_image']
 
+
+class CartSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(read_only=True)
+    product_id = serializers.PrimaryKeyRelatedField(
+        write_only=True, 
+        source='product', 
+        queryset=Product.objects.all()
+        )
+    user = serializers.PrimaryKeyRelatedField(
+        read_only=True, 
+        default=serializers.CurrentUserDefault() 
+        )
+    total_cust = serializers.SerializerMethodField()
+
+    class Meta:
+        model =  Card
+        fields = ['id', 'user', 'product', 'product_id', 'quantity', 'total_cust']
+    def get_total_cust(self, obj):
+        return obj.total_cust
