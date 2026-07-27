@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, action
 from rest_framework import generics, permissions, viewsets
 from django.contrib.auth.models import User
-from .serializers import RegisterSerializer, ProductSerializer, CartSerializer
+from .serializers import RegisterSerializer, ProductSerializer, CartSerializer , CustomerSerializer
 from rest_framework import permissions, status
 from . models import Product, Card
 
@@ -80,3 +80,12 @@ class CartViewSet(viewsets.ModelViewSet):
         cart_item.delete()
         return Response({'message':'cart delete successfull'}, status=status.HTTP_200_OK)
 
+
+
+
+class CustomerCreateView(generics.CreateAPIView):
+    serializer_class = CustomerSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
