@@ -3,9 +3,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, action
 from rest_framework import generics, permissions, viewsets
 from django.contrib.auth.models import User
-from .serializers import RegisterSerializer, ProductSerializer, CartSerializer , CustomerSerializer
+from .serializers import RegisterSerializer, ProductSerializer, CartSerializer , CustomerSerializer, OrderPlaceSerializer
 from rest_framework import permissions, status
-from . models import Product, Card
+from . models import Product, Card, OrderPlaced
 
 
 @api_view(['GET'])
@@ -89,3 +89,13 @@ class CustomerCreateView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+
+
+class OrderViewSet(viewsets.ModelViewSet):
+    permission_classes=[permissions.IsAuthenticated]
+    serializer_class = OrderPlaceSerializer
+
+    def get_queryset(self):
+        return OrderPlaced.objects.filter(user=self.request.user).order_by('-ordered_date')

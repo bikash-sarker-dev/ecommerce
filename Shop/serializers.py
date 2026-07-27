@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from . models import Product, Card, Customer
+from . models import Product, Card, Customer, OrderPlaced
 
 
 
@@ -78,3 +78,14 @@ class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
         fields = ['id','user', 'name','division','district','thana','villorroad','zipCode']
+
+
+
+
+class OrderPlaceSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(read_only=True)
+    customer = CustomerSerializer(read_only = True)
+
+    class Meta:
+        model = OrderPlaced
+        fields =['id','user','product', 'customer', 'quantity', 'ordered_date', 'status', 'total_cust']
